@@ -1,0 +1,58 @@
+Promise:
+E ultizado para fazer uma chamada ao backend, como o propio nome diz e uma promesa ela vai tentar
+fazer uma comunicacao.
+Aonde ela possui uma funcao de retorno chamada de THEN(callback), aonde poderemos receber um ERROR ou um SUCESSO
+
+Observable :
+
+E uma Promise reativa ou seja um objeto mais complexo e completo onde ele fica monitorando os dados que foram
+retornado de uma API.
+
+Recursos de um Observable:
+ERROR
+CANCELAMENTO
+RETRY
+DADOS PUSH / PULL
+
+Criando uma Demo
+ng new RXJS --minimal=true
+? Would you like to add Angular routing? (y/N) n
+? Which stylesheet format would you like to use? CSS
+ng s para subir o servidor
+
+
+import { Component, OnInit } from '@angular/core';
+@Component({
+  selector: 'app-root',
+  template: ``,
+  styles: []
+})
+export class AppComponent implements OnInit {
+
+  title = 'RXJS';
+
+  minhaPromise(nome: string): Promise<string> {
+
+    return new Promise((resolve, reject) => {
+      if (nome === 'Eduardo') {
+        setTimeout(() => {
+          resolve('Seja Bem Vindo' + nome) //SUCESSO
+        }, 1000) // Simula chamada na API
+      }
+      else {
+        reject('Ops! Voce nao  e o Eduardo')
+      }
+    })
+
+  }
+
+  ngOnInit(): void {
+    // this.minhaPromise('Eduardo')
+    //     .then(result => console.log(result))
+
+        this.minhaPromise('Jose')
+        .then(result => console.log(result)) //Sucesso
+        .catch(error => console.log(error)) // Error
+        
+  }
+}
