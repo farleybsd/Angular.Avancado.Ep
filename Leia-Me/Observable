@@ -1,0 +1,73 @@
+Observable :
+
+E uma Promise reativa ou seja um objeto mais complexo e completo onde ele fica monitorando os dados que foram
+retornado de uma API.(ela nao morrer ate terminar o request)
+
+Recursos de um Observable:
+ERROR
+CANCELAMENTO
+RETRY
+DADOS PUSH / PULL
+
+Criando uma Demo
+ng new RXJS --minimal=true
+? Would you like to add Angular routing? (y/N) n
+? Which stylesheet format would you like to use? CSS
+ng s para subir o servidor
+
+
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+
+@Component({
+  selector: 'app-root',
+  template: ``,
+  styles: []
+})
+export class AppComponent implements OnInit {
+
+  title = 'RXJS';
+
+  minhaPromise(nome: string): Promise<string> {
+
+    return new Promise((resolve, reject) => {
+      if (nome === 'Eduardo') {
+        setTimeout(() => {
+          resolve('Seja Bem Vindo' + nome) //SUCESSO
+        }, 1000) // Simula chamada na API
+      }
+      else {
+        reject('Ops! Voce nao  e o Eduardo')
+      }
+    })
+
+  }
+
+  minhaObservable(nome : string) : Observable<string>{
+    
+    return new Observable(subscriber => {
+
+      if(nome ==='Eduardo'){
+
+        subscriber.next('Ola ' + nome)
+        subscriber.next('Ola Denovo '+ nome)
+  
+        setTimeout(()=>{
+          subscriber.next('Resposta Com Delay ' + nome)
+        },1000)
+      }
+      else{
+        subscriber.error('Ops! Deu erro!')
+      }
+    })
+  }
+
+  ngOnInit(): void {
+        this.minhaObservable('Eduardo')
+            .subscribe(
+              result => console.log(result), //Sucesso
+              error => console.log(error) //Error
+              )
+  }
+}
