@@ -48,20 +48,22 @@ export class AppComponent implements OnInit {
 
   }
 
-  minhaObservable(nome : string) : Observable<string>{
-    
+  minhaObservable(nome: string): Observable<string> {
+
     return new Observable(subscriber => {
 
-      if(nome ==='Eduardo'){
+      if (nome === 'Eduardo') {
 
         subscriber.next('Ola ' + nome)
-        subscriber.next('Ola Denovo '+ nome)
-  
-        setTimeout(()=>{
+        subscriber.next('Ola Denovo ' + nome)
+
+        setTimeout(() => {
           subscriber.next('Resposta Com Delay ' + nome)
-        },1000)
+        }, 1000)
+
+        subscriber.complete()
       }
-      else{
+      else {
         subscriber.error('Ops! Deu erro!')
       }
     })
@@ -69,17 +71,33 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-        // this.minhaPromise('Eduardo')
-        //     .then(result => console.log(result))
+    // this.minhaPromise('Eduardo')
+    //     .then(result => console.log(result))
 
-        // this.minhaPromise('Jose')
-        // .then(result => console.log(result)) //Sucesso
-        // .catch(error => console.log(error)) // Error
+    // this.minhaPromise('Jose')
+    // .then(result => console.log(result)) //Sucesso
+    // .catch(error => console.log(error)) // Error
 
-        this.minhaObservable('Eduardo')
-            .subscribe(
-              result => console.log(result), //Sucesso
-              error => console.log(error) //Error
-              )
+    // this.minhaObservable('Eduardo')
+    //   .subscribe(
+    //     result => console.log(result), //Sucesso
+    //     error => console.log(error)); //Error
+
+
+
+    const observer = {
+      next: valor => this.escrever(valor), //console.log('Next: ', valor),
+      error: erro => console.log('Erro: ', erro),
+      complete: () => console.log('FIM!')
+    }
+
+    const obs = this.minhaObservable('Eduardo')
+    obs.subscribe(observer)
+  }
+
+  escrever(texto : string){
+    console.log(texto)
   }
 }
+
+// O atalho para indentar no Visual Studio Code pelo Windows é Shift + Alt + F

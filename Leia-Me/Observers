@@ -1,0 +1,39 @@
+Observers :
+
+Estrutura de instrucoes para trabalhar com subscribe de uma Observable.
+
+// Voce precisa ter uma Observable
+
+minhaObservable(nome: string): Observable<string> {
+
+    return new Observable(subscriber => {
+
+      if (nome === 'Eduardo') {
+
+        subscriber.next('Ola ' + nome)
+        subscriber.next('Ola Denovo ' + nome)
+
+        setTimeout(() => {
+          subscriber.next('Resposta Com Delay ' + nome)
+        }, 1000)
+
+        subscriber.complete() // funcao do observer
+      }
+      else {
+        subscriber.error('Ops! Deu erro!')
+      }
+    })
+  }
+
+  // Criar um objeto que sera chamado dentro da Observable
+  const observer = {
+      next: valor => this.escrever(valor), //console.log('Next: ', valor),
+      error: erro => console.log('Erro: ', erro),
+      complete: () => console.log('FIM!')
+    }
+
+
+    //Chamando a observale com o observer
+    const obs = this.minhaObservable('Eduardo')
+    obs.subscribe(observer)
+  }
