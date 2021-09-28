@@ -69,6 +69,41 @@ export class AppComponent implements OnInit {
     })
   }
 
+  usuarioObservable(nome: string, email: string): Observable<Usuario> {
+
+    return new Observable(subscriber => {
+
+      let usuario = new Usuario(nome, email);
+
+      if (nome === 'Admin') {
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 1000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 2000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 3000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 4000)
+
+        setTimeout(() => {
+          subscriber.complete()
+        }, 5000)
+
+      }
+      else {
+        subscriber.error('Ops! Deu erro!')
+      }
+    })
+  }
+
   ngOnInit(): void {
 
     // this.minhaPromise('Eduardo')
@@ -91,13 +126,32 @@ export class AppComponent implements OnInit {
       complete: () => console.log('FIM!')
     }
 
-    const obs = this.minhaObservable('Eduardo')
-    obs.subscribe(observer)
+    // const obs = this.minhaObservable('Eduardo')
+    // obs.subscribe(observer)
+
+    const obs = this.usuarioObservable('Admin','Admin@admin.com.br')
+    const sub = obs.subscribe(observer)
+
+    setTimeout(()=>{
+      sub.unsubscribe()
+      console.log('Conexao Fechada : '+ sub.closed)
+    },3500)
   }
 
-  escrever(texto : string){
+  escrever(texto: string) {
     console.log(texto)
   }
+}
+
+export class Usuario {
+  nome: string;
+  email: string;
+
+  constructor(nome: string, email: string) {
+    this.nome = nome;
+    this.email = email;
+  }
+
 }
 
 // O atalho para indentar no Visual Studio Code pelo Windows é Shift + Alt + F

@@ -37,3 +37,69 @@ minhaObservable(nome: string): Observable<string> {
     const obs = this.minhaObservable('Eduardo')
     obs.subscribe(observer)
   }
+
+
+
+
+  Subscribe e Unsubscribe
+
+-- Criando a classe de retorno
+  export class Usuario {
+  nome: string;
+  email: string;
+
+  constructor(nome: string, email: string) {
+    this.nome = nome;
+    this.email = email;
+  }
+
+}
+
+
+-- Criando o Observable que ira retornar a classe
+  usuarioObservable(nome: string, email: string): Observable<Usuario> {
+
+    return new Observable(subscriber => {
+
+      let usuario = new Usuario(nome, email);
+
+      if (nome === 'Admin') {
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 1000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 2000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 3000)
+
+        setTimeout(() => {
+          subscriber.next(usuario)
+        }, 4000)
+
+        setTimeout(() => {
+          subscriber.complete()
+        }, 5000)
+
+      }
+      else {
+        subscriber.error('Ops! Deu erro!')
+      }
+    })
+  }
+
+
+-- Chamando Subscribe e Unsubscribe
+
+ const obs = this.usuarioObservable('Admin','Admin@admin.com.br')
+const sub = obs.subscribe(observer) //Subscribe
+
+    setTimeout(()=>{
+      sub.unsubscribe() //Unsubscribe
+      console.log('Conexao Fechada : '+ sub.closed)
+    },3500)
+  }
