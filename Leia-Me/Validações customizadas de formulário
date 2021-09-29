@@ -1,0 +1,28 @@
+
+Instalando o Ng Brasil
+
+https://www.npmjs.com/package/ng-brazil
+
+npm i ng-brazil
+npm install --save ng-brazil js-brasil
+npm i -S angular2-text-mask text-mask-addons
+npm i ng2-validation
+
+Import module in app.module
+import { NgBrazil } from 'ng-brazil' 
+import { TextMaskModule } from 'angular2-text-mask';
+import{CustomFormsModule} from 'ng2-validation'
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    ....,
+    NgBrazil,
+    TextMaskModule,
+    CustomFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
