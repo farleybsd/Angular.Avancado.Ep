@@ -1,3 +1,14 @@
+// Primeiro passo criar a pasta model e o seu modelo
+export interface Usuario{
+    id: string;
+    nome: string;
+    cpf:string;
+    email: string;
+    senha: string;
+    senhaConfirmacao:string;
+}
+
+// Preencher o FormBuider com o objeto tipado
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Usuario } from './models/Usuario';
@@ -23,7 +34,7 @@ export class CadastroComponent implements OnInit {
   }
 
   adicionarUsuario(){
-    this.usuario = Object.assign({},this.usuario,this.cadastroForm.value);
+    this.usuario = Object.assign({},this.usuario,this.cadastroForm.value); // Tipando o FormBuider com a classe usuario
   }
 
 }
