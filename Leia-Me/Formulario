@@ -1,0 +1,114 @@
+Criando Componente de Formulario
+ng g c demos\reactiveForms\cadastro
+
+Importando a lib FormsModule no app.module.ts
+
+import { FormsModule,ReactiveFormsModule }   from '@angular/forms';
+
+imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    [RouterModule.forRoot(rootRouterConfig, { useHash: false})]
+  ],
+
+
+Adc Componente cadastro no menu
+<li class="nav-item">
+    <a class="nav-link"  [routerLink]="['/cadastro']">Cadastro</a>
+</li>
+
+Adc a rota app.routes.ts
+ {path: 'cadastro', component: CadastroComponent }
+
+ Adc Hmtl cadastro.component.html
+
+ <div class="container main-container">
+    <h4>Demo Cadastro</h4>
+    <hr />
+    <form novalidate (ngSubmit)="adicionarUsuario()" [formGroup]="cadastroForm">
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="nome">Nome Completo</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="nome" type="text" placeholder="Nome (requerido)"
+                        formControlName="nome" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="cpf">CPF</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="cpf" type="text" placeholder="cpf (requerido)"
+                        formControlName="cpf" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Email">Email</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="Email" type="text" placeholder="Email (requerido)"
+                        formControlName="Email" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="Senha">Senha</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="Senha" type="text" placeholder="Senha (requerido)"
+                        formControlName="Senha" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label" for="SenhaConfirmacao">Confirme a senha</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="SenhaConfirmacao" type="text" placeholder="Confirme a senha (requerido)"
+                        formControlName="SenhaConfirmacao" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-2">
+                    <span><button class="btn btn-success" id="Registrar" type="submit">Registrar</button></span>
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+</div>
+
+Fazendo a regra 
+cadastro.component.ts
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-cadastro',
+  templateUrl: './cadastro.component.html'
+})
+export class CadastroComponent implements OnInit {
+
+  cadastroForm: FormGroup;
+
+  constructor() { }
+
+  ngOnInit() {
+    this.cadastroForm = new FormGroup({
+      nome : new FormControl(''),
+      cpf : new FormControl(''),
+      Email : new FormControl(''),
+      Senha : new FormControl(''),
+      SenhaConfirmacao : new FormControl('')
+    });
+  }
+
+  adicionarUsuario(){
+    let x = this.cadastroForm.value
+  }
+
+}
