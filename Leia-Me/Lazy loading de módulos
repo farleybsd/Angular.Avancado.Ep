@@ -1,0 +1,61 @@
+
+Criando o componente
+ng g c demos\arquitetura-componentes\produto-dashboard
+
+Dentro da Pasta vai ficar assim
+arquitetura-componentes\produto-dashboard ->
+                        produto-dashboard.component.html
+                        produto-dashboard.component.ts
+arquitetura-componentes ->
+            produto.module.ts
+            produto.route.ts
+
+produto.module.ts
+import {NgModule} from '@angular/core';
+import {CommonModule } from '@angular/common';
+
+
+import { ProdutoDashboardComponent } from './produto-dashboard/produto-dashboard.component';
+import { ProdutoRoutingModule } from './produto.route';
+
+@NgModule({
+    declarations:[
+        ProdutoDashboardComponent
+    ],
+    imports:[
+        CommonModule,
+        ProdutoRoutingModule
+    ],
+    exports:[
+
+    ]
+})
+export class ProdutoModule{}
+
+
+produto.route.ts
+import {NgModule} from '@angular/core';
+import {Routes,RouterModule } from '@angular/router';
+import {ProdutoDashboardComponent} from './produto-dashboard/produto-dashboard.component';
+
+const produtoRouterConfig : Routes =[
+    {path:'',component:ProdutoDashboardComponent}
+];
+
+@NgModule({
+    imports:[
+        RouterModule.forChild(produtoRouterConfig)
+    ],
+    exports:[
+        RouterModule
+    ]
+})
+
+export class ProdutoRoutingModule{}
+
+Adc a rota com ladyloading no app.routes.ts
+{
+    path: 'produtos',
+    loadChildren: () => import('./demos/arquitetura-componentes/produto.module')
+        .then(m => m.ProdutoModule)
+}

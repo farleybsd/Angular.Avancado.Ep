@@ -16,6 +16,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import{CustomFormsModule} from 'ng2-validation'
 import { NavegacaoModule } from './navegacao/navegacao.module';
 import { AppRoutingModule } from './app.routes';
+//import { ProdutoDashboardComponent } from './demos/arquitetura-componentes/produto-dashboard/produto-dashboard.component'; subistituido  produto.module
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { AppRoutingModule } from './app.routes';
     //HomeComponent,   subistituido por NavegacaoModule
     //FooterComponent, subistituido por NavegacaoModule
     SobreComponent,
-    CadastroComponent
+    CadastroComponent,
+   // ProdutoDashboardComponent subistituido  produto.module
   ],
   imports: [
     NavegacaoModule,
