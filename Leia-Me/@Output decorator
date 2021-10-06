@@ -1,0 +1,41 @@
+Comunicacao do componente filho para o pai
+
+1 Ir no componente Filho produto-component.html criar uma funcao
+
+ <div class="card-footer">
+    <a [ngClass]="produto.ativo ? 'btn btn-success' : 'btn btn-danger'" (click)="EmitirEvento()" href="javascript:void(0)">
+                <span><span [ngClass]="produto.ativo ? 'fa fa-toggle-on' : 'fa fa-toggle-of' "></span>Status</span>
+    </a>
+</div>
+
+criar a funcao EmitirEvento() produto-card-detalhe.ts
+import {Component, Input, Output,EventEmitter} from '@angular/core';
+import { Produto } from '../models/produto';
+
+@Component({
+    selector:'produto-card-detalhe',
+    templateUrl: './produto-card-detalhe.component.html'
+})
+export class ProdutoDetalheComponent{
+    @Input()
+    produto:Produto;
+
+    @Output()
+    status : EventEmitter<any> = new EventEmitter();
+
+    EmitirEvento(){
+        this.status.emit(this.produto);
+    }
+}
+
+2 Ir no componente Filho produto-dashboard.component.html criar uma funcao
+ <div class="row text-center">
+        <produto-card-detalhe class="col-md-4" *ngFor="let produto of produtos" 
+        [produto] ="produto"
+        (status)="mudarStatus($event)"></produto-card-detalhe>
+</div>
+
+criar a funcao EmitirEvento() produto-dashboard.component.ts
+mudarStatus(event : Produto){
+          event.ativo = !event.ativo;
+  }
