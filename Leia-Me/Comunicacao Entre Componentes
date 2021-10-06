@@ -1,0 +1,60 @@
+@Input decorator
+Faz comunicacao do componente Pai para o componente Filho
+
+@Output 
+Faz comunicacao do componente Filho para componente Pai
+
+1 Dentro do seu modulo criar uma pasta componente (produto-card-detalhe)
+
+import {Component, Input} from '@angular/core';
+import { Produto } from '../models/produto';
+
+@Component({
+    selector:'produto-card-detalhe',
+    templateUrl: './produto-card-detalhe.component.html'
+})
+export class ProdutoDetalheComponent{
+    @Input()
+    produto:Produto;
+}
+
+2 produto-card-detalhe.html criar o html
+
+3 - Dentro Do component Pai produto-dashboard.component.html fazer o registro do filho /produto-card-detalhe.component.html
+<div class="container main-container">
+    <h1>Lista Produtos</h1>
+    <produto-count [produtos] = "produtos"></produto-count> // Vem do Pai  produto-dashboard.component
+    <div class="row text-center">
+    //Passagem Dos Dados
+        <produto-card-detalhe class="col-md-4" *ngFor="let produto of produtos" [produto] ="produto"></produto-card-detalhe> // Vem do Pai  produto-dashboard.component
+    </div>
+</div>
+
+Registrar o component no mdodulo produto.module.ts
+
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt);
+
+import { ProdutoDashboardComponent } from './produto-dashboard/produto-dashboard.component';
+import { ProdutoDetalheComponent } from './components/produto-card-detalhe.component';
+
+import { ProdutoRoutingModule } from './produto.route';
+import { ProdutoCountComponent } from './components/produto-count.component';
+@NgModule({
+    declarations: [
+        ProdutoDashboardComponent,
+        ProdutoDetalheComponent,
+        ProdutoCountComponent
+    ],
+    imports: [
+        CommonModule,
+        ProdutoRoutingModule
+    ],
+    exports: []
+})
+export class ProdutoModule { }
