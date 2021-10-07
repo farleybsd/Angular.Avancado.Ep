@@ -14,12 +14,14 @@ import { CadastroComponent } from './demos/reactiveForms/cadastro/cadastro.compo
 import { NavegacaoModule } from './navegacao/navegacao.module';
 
 import { AppRoutingModule } from './app.routes';
+import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SobreComponent,
-    CadastroComponent
+    CadastroComponent,
+    ProdutoAppComponet
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,7 @@ import { AppRoutingModule } from './app.routes';
     AppRoutingModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/'}
+   // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
   ],
   bootstrap: [AppComponent]
 })

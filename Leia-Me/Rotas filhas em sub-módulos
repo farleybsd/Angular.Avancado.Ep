@@ -1,0 +1,60 @@
+A ideia desses sub-modulos e deixa as rotas nas sua responsabilidade
+
+1 Criar o componente
+ng g c demos\arquitetura-componentes\editarProduto
+
+2 Ir no componente Pai e fazer  a criacao do link
+<a [routerLink]="['editar/',produto.id]" class="btn btn-primary">Editar</a>
+
+3 -  remover o base do app.module.component e adicionar no index.html
+providers: [
+   // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
+  ],
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+
+  <title>Minha App Angular</title>
+</head>
+
+4 - Criar o produto.app.component.ts para fazer a router-outlet no produto produto.routes.ts
+
+import { Component } from "@angular/core";
+
+@Component({
+    selector:'produto-app-root',
+    template:'<router-outlet></router-outlet>'
+})
+
+export class ProdutoAppComponet{}
+
+
+5 - Fazer a adaptacao no routes do proprio modulo nesse caso produto.routes.ts
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
+import { ProdutoDashboardComponent } from './produto-dashboard/produto-dashboard.component';
+import { ProdutoAppComponet } from './produto.app.component';
+
+const produtoRouterConfig: Routes = [
+    { path: '', component: ProdutoAppComponet,
+      children:[
+        { path: '', component: ProdutoDashboardComponent},
+        { path: 'editar/:id', component: EditarProdutoComponent }
+    ] },
+    
+];
+
+@NgModule({
+    imports: [
+        RouterModule.forChild(produtoRouterConfig)
+    ],
+    exports: [RouterModule]
+})
+export class ProdutoRoutingModule { }

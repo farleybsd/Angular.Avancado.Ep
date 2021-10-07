@@ -13,7 +13,7 @@ export class MenuComponent {
       admim:false
     },
     {
-      link:'/Cadastro',
+      link:'/cadastro',
       name: 'Cadastro',
       exact:true,
       admim:false
@@ -25,7 +25,7 @@ export class MenuComponent {
       admim:false
     },
     {
-      link:'/produto',
+      link:'/produtos',
       name: 'Produto',
       exact:true,
       admim:false
