@@ -1,0 +1,43 @@
+Criando um componente
+
+ng g c navegacao\notFound
+
+Realizar o export do componente no modulo navegacao.module.ts
+
+@NgModule({
+    declarations: [
+        MenuComponent,
+        HomeComponent,
+        FooterComponent,
+        NotFoundComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule
+    ],
+    exports: [
+        MenuComponent,
+        HomeComponent,
+        FooterComponent,
+        NotFoundComponent
+    ]
+})
+
+Ir no Html do componente not-found.component.html
+<div class="container main-container">
+    <div class="col-lg-12 text-center">
+        <h1>404 - OOOOPS! <br> Não tem nada aqui ! :(</h1>
+    </div>
+</div>
+
+Depois Realizar a alteracao no app.routes adiconando o component na rota
+const rootRouterConfig: Routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: 'home', component: HomeComponent},
+    { path: 'sobre', component: SobreComponent },
+    { path: 'cadastro', component: CadastroComponent },
+    { path: 'produtos', 
+            loadChildren: () => import('./demos/arquitetura-componentes/produto.module')
+            .then(m => m.ProdutoModule)},
+    { path: '**', component: NotFoundComponent}, // Tem que ser a ultima Declaracao
+];
