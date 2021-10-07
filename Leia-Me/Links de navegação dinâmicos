@@ -1,0 +1,56 @@
+=> menu.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-menu',
+    templateUrl: './menu.component.html'
+})
+export class MenuComponent {
+    nav: Nav[] = [
+        {
+            link: '/home',
+            name: 'Home',
+            exact: true,
+            admim: false
+        },
+        {
+            link: '/Cadastro',
+            name: 'Cadastro',
+            exact: true,
+            admim: false
+        },
+        {
+            link: '/sobre',
+            name: 'Sobre',
+            exact: true,
+            admim: false
+        },
+        {
+            link: '/produto',
+            name: 'Produto',
+            exact: true,
+            admim: false
+        }
+    ]
+}
+
+interface Nav {
+    link: string,
+    name: string,
+    exact: boolean,
+    admim: boolean
+}
+
+=> menu.component.html
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="collapse navbar-collapse" id = "navbarResponsive" >
+        <ul class="navbar-nav ml-auto" >
+            <li class="nav-item" * ngFor="let item of nav" >
+                    <a class="nav-link"[routerLinkActiveOptions] = "{ exact: item.exact}" routerLinkActive = "active"[routerLink] = "item.link" >
+                    {{ item.name }}
+                    </a>
+            </li>
+        </ul>
+        
+     </div>
+</nav>
