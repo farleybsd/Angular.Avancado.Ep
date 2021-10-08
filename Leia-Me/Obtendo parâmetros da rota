@@ -1,0 +1,142 @@
+Obtendo parâmetros da rota
+
+1 Criar Um produto.service.ts
+import { Injectable } from "@angular/core";
+import { Produto } from "../models/produto";
+
+@Injectable()
+export class ProdutoService{
+    produtos : Produto[];
+
+    constructor(){
+        this.produtos =[
+        {
+            id: 1,
+            nome: 'Teste',
+            ativo:true,
+            valor: 100,
+            imagem: 'celular.jpg'
+        },
+        {
+            id: 2,
+            nome: 'Teste 2',
+            ativo:true,
+            valor: 200,
+            imagem: 'gopro.jpg'
+        },
+        {
+            id: 3,
+            nome: 'Teste 3',
+            ativo:true,
+            valor: 300,
+            imagem: 'laptop.jpg'
+        },
+        {
+            id: 4,
+            nome: 'Teste 4',
+            ativo:true,
+            valor: 400,
+            imagem: 'mouse.jpg'
+        },
+        {
+            id: 5,
+            nome: 'Teste 5',
+            ativo:true,
+            valor: 500,
+            imagem: 'teclado.jpg'
+        },
+        {
+            id: 6,
+            nome: 'Teste 6',
+            ativo:true,
+            valor: 600,
+            imagem: 'headset.jpg'
+        }
+    ]
+    }
+
+    obterTodos() : Produto[]{
+        return this.produtos;
+    }
+
+    obterPorId(id:number) : Produto{
+        return this.produtos.find(produto => produto.id==id);
+    }
+}
+
+2 Ir no module do componet exportalo 
+providers:[
+    ProdutoService
+],
+
+3 - Html do component que sera editado 
+
+<div class="container main-container">
+    <div class="card h-100">
+        <div style="align-content:center;">
+            <img src="/assets/{{ produto.imagem }}" height="164px" width="253px" alt="">
+        </div>
+
+        <h4 class="card-title">{{ produto.nome | titlecase }}</h4>
+
+        <div [ngSwitch]="produto.ativo">
+            <p *ngSwitchCase="true">Em estoque</p>
+            <p *ngSwitchCase="false">Fora de estoque</p>
+        </div>
+
+        <div *ngIf="!produto.ativo" class="card-body">
+            <div>
+                <h4>Avise-me quando chegar</h4>
+                <<ng-content select=".acabou"></ng-content>
+            </div>
+        </div>
+
+        <div *ngIf="produto.ativo" class="card-body">
+            <div>
+                <h4>{{ produto.valor | currency:'BRL':'symbol':'1.2-2':'pt' }}</h4>
+                <<ng-content select=".corre"></ng-content>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <a [ngClass]="produto.ativo ? 'btn btn-success' : 'btn btn-danger'" (click)="EmitirEvento()" href="javascript:void(0)">
+                <span><span [ngClass]="produto.ativo ? 'fa fa-toggle-on' : 'fa fa-toggle-of' "></span>Status</span>
+            </a>
+            &nbsp;
+            <a [routerLink]="['editar/',produto.id]" class="btn btn-primary">Editar</a>
+        </div>
+    </div>
+</div>
+
+
+4 - component.ts do component que vai ser editadi
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Produto } from '../models/produto';
+import { ProdutoService } from '../Services/produto.service';
+
+@Component({
+  selector: 'app-editar-produto',
+  templateUrl: './editar-produto.component.html',
+  styles: []
+})
+export class EditarProdutoComponent implements OnInit {
+
+  produto : Produto;
+
+  constructor(
+    private route : ActivatedRoute,
+    private produtoService : ProdutoService
+  ) {}
+
+  ngOnInit() {
+    this.route.params
+       .subscribe(params =>{
+         // console.log(params['id']) // id vem da declaracao da rota
+         this.produto = this.produtoService.obterPorId(params['id']);
+       })
+
+  }
+
+}
