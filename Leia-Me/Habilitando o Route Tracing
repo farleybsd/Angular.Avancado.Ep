@@ -1,3 +1,4 @@
+//1.Habilitango Log nas rotas
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './navegacao/home/home.component';
