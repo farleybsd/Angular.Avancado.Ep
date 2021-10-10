@@ -12,6 +12,7 @@ import { ProdutoRoutingModule } from './produto.route';
 import { ProdutoCountComponent } from './components/produto-count.component';
 import { EditarProdutoComponent } from './editar-produto/editar-produto.component';
 import { ProdutoService } from './Services/produto.service';
+import { ProdutoResolve } from './Services/produto.resolve';
 @NgModule({
     declarations: [
         ProdutoDashboardComponent,
@@ -24,7 +25,8 @@ import { ProdutoService } from './Services/produto.service';
         ProdutoRoutingModule
     ],
     providers:[
-        ProdutoService
+        ProdutoService,
+        ProdutoResolve
     ],
     exports: []
 })

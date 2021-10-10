@@ -1,0 +1,58 @@
+// A ideia Basica dessa Aula e usar os parametros da rotas para filtrar os dados em tela:
+
+//1.http://localhost:4200/produtos/todos
+//2.http://localhost:4200/produtos/ativos
+
+//1.Primeiro passo e  mudar a sua rota nesse caso estou usando a rota do modulo produto.route.ts
+
+const produtoRouterConfig: Routes = [
+    { path: '', component: ProdutoAppComponet,
+      children:[
+        { path: '', redirectTo:'todos'},
+        { 
+            path: ':estado',
+            component: ProdutoDashboardComponent,
+            resolve:{
+                produtos:ProdutoResolve
+            }
+        },
+        { path: 'editar/:id', component: EditarProdutoComponent }
+    ] },
+    
+];
+
+//2. Criar um resolve ProdutoResolve
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Resolve} from "@angular/router";
+import { observable } from "rxjs";
+import { Produto } from "../models/produto";
+import { ProdutoService } from "./produto.service";
+
+@Injectable()
+export class ProdutoResolve implements Resolve<Produto[]>{
+
+    constructor(private produtoService:ProdutoService) {}
+
+    resolve(route: ActivatedRouteSnapshot){
+       return this.produtoService.obterTodos(route.params.estado)
+    }
+
+}
+//3 Registrar Resolve no modulo
+providers:[
+    ProdutoService,
+    ProdutoResolve
+],
+//4 Ir no Produto.Service e criar a funcao obter todoss que esta no resolve
+obterTodos(estado : string) : Produto[]{
+    if(estado ==='ativos'){
+        return this.produtos.filter(produto=> produto.ativo)
+    }
+
+    return this.produtos
+ }
+
+ //5.Alterar on Init da component para receber os dados com filtro nesse caso e produto-dashboard.component.ts
+ ngOnInit() {
+    this.produtos = this.route.snapshot.data['produtos']
+   }
