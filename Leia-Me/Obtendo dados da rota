@@ -1,0 +1,24 @@
+Obtendo dados da rota
+
+//Editar a rotar adicionando o paramentro data
+const produtoRouterConfig: Routes = [
+    { path: '', component: ProdutoAppComponet,
+      children:[
+        { path: '', redirectTo:'todos'},
+        { 
+            path: ':estado',
+            component: ProdutoDashboardComponent,
+            resolve:{
+                produtos:ProdutoResolve
+            },
+            data:{
+                teste: 'informacão'
+            }
+        },
+        { path: 'editar/:id', component: EditarProdutoComponent }
+    ] },
+// Pegando o valor
+ngOnInit() {
+   this.produtos = this.route.snapshot.data['produtos']
+   console.log(this.route.snapshot.data['teste'])
+  }
