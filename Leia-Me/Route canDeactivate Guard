@@ -1,0 +1,84 @@
+Route canDeactivate Guard - Sair Sem Salvar
+
+1- Criar o guardiao cadastro.guard.ts
+
+import { Injectable } from "@angular/core";
+import { CanDeactivate } from "@angular/router";
+import { CadastroComponent } from "../demos/reactiveForms/cadastro/cadastro.component";
+
+@Injectable()
+export class CadastroGuard implements CanDeactivate<CadastroComponent>
+{
+
+    canDeactivate(component:CadastroComponent)
+    {
+
+        if(component.mudancaNaoSalvas)
+        {
+            return window.confirm('tem certeza que deseja sair do formulario')
+        }
+        return true;
+    }
+
+}
+
+2 - registrar no app.module
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SobreComponent,
+    CadastroComponent,
+    ProdutoAppComponet,
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NavegacaoModule,
+    TextMask.TextMaskModule,
+    NgBrazil,
+    CustomFormsModule,
+    AppRoutingModule
+  ],
+  providers: [
+   // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
+   AuthGuard,
+   CadastroGuard
+  ],
+  bootstrap: [AppComponent]
+})
+
+- Criar variavel de controle que sera usada no guardiao cadastro.component.ts
+
+export class CadastroComponent implements OnInit, AfterViewInit {
+  
+  mudancaNaoSalvas: boolean;
+
+ngAfterViewInit(): void {
+    this.mudancaNaoSalvas = true;
+}
+adicionarUsuario() {
+     this.mudancaNaoSalvas = false;
+}
+}
+
+5 - adicionando guaridao na rota app.routes
+
+const rootRouterConfig: Routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: 'home', component: HomeComponent},
+    { path: 'sobre', component: SobreComponent },
+    { path: 'cadastro', component: CadastroComponent,canDeactivate:[CadastroGuard] },
+    { path: 'produtos', 
+            loadChildren: () => import('./demos/arquitetura-componentes/produto.module')
+            .then(m => m.ProdutoModule)},
+    { path: 'admin', 
+            loadChildren: () => import('./admin/admin.module')
+            .then(m => m.AdminModule),
+            canLoad:[AuthGuard],
+            canActivate:[AuthGuard]
+    },
+
+    { path: '**', component: NotFoundComponent}, // Tem que ser a ultima Declaracao
+];

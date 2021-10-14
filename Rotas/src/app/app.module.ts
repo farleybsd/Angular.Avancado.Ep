@@ -16,6 +16,7 @@ import { NavegacaoModule } from './navegacao/navegacao.module';
 import { AppRoutingModule } from './app.routes';
 import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.component';
 import { AuthGuard } from './Services/app.guard';
+import { CadastroGuard } from './Services/cadastro.guard';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { AuthGuard } from './Services/app.guard';
   ],
   providers: [
    // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
-   AuthGuard
+   AuthGuard,
+   CadastroGuard
   ],
   bootstrap: [AppComponent]
 })
