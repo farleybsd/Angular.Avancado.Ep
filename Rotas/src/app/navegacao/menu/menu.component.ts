@@ -29,6 +29,12 @@ export class MenuComponent {
       name: 'Produto',
       exact:false,
       admim:false
+    },
+    {
+      link: '/admin',
+      name: 'Admin',
+      exact: false,
+      admim: false
     }
   ]
 }

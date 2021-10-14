@@ -15,13 +15,15 @@ import { NavegacaoModule } from './navegacao/navegacao.module';
 
 import { AppRoutingModule } from './app.routes';
 import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.component';
+import { AuthGuard } from './Services/app.guard';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     SobreComponent,
     CadastroComponent,
-    ProdutoAppComponet
+    ProdutoAppComponet,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.
   ],
   providers: [
    // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
+   AuthGuard
   ],
   bootstrap: [AppComponent]
 })

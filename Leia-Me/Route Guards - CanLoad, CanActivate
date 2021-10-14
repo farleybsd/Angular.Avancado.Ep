@@ -1,0 +1,67 @@
+Criar o arquivo app.guard.ts
+
+import { Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapshot, UrlSegment, UrlTree } from "@angular/router";
+import { Observable } from "rxjs";
+
+@Injectable()
+export class AuthGuard implements CanLoad,CanActivate{
+    user = {admin:true,logged:true}
+
+    canLoad(): boolean{
+        return this.user.admin;
+    }
+    canActivate(): boolean{
+        return this.user.logged;
+    }
+
+}
+
+registrando  app.guard.ts no app.modules.ts
+
+import { AuthGuard } from './Services/app.guard';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SobreComponent,
+    CadastroComponent,
+    ProdutoAppComponet,
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NavegacaoModule,
+    TextMask.TextMaskModule,
+    NgBrazil,
+    CustomFormsModule,
+    AppRoutingModule
+  ],
+  providers: [
+   // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
+   AuthGuard
+  ],
+  bootstrap: [AppComponent]
+})
+
+Colocando o guaridao da rota no app.routes
+
+import { AuthGuard } from './Services/app.guard';
+const rootRouterConfig: Routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: 'home', component: HomeComponent},
+    { path: 'sobre', component: SobreComponent },
+    { path: 'cadastro', component: CadastroComponent },
+    { path: 'produtos', 
+            loadChildren: () => import('./demos/arquitetura-componentes/produto.module')
+            .then(m => m.ProdutoModule)},
+    { path: 'admin', 
+            loadChildren: () => import('./admin/admin.module')
+            .then(m => m.AdminModule),
+            canLoad:[AuthGuard],
+            canActivate:[AuthGuard]
+    },
+
+    { path: '**', component: NotFoundComponent}, // Tem que ser a ultima Declaracao
+];
