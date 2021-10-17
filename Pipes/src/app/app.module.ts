@@ -21,6 +21,7 @@ import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.
 import { AuthGuard } from './Services/app.guard';
 import { CadastroGuard } from './Services/cadastro.guard';
 import { FilmesComponent } from './demos/pipes/filmes/FilmesComponent';
+import { FileSizePiope } from './demos/pipes/filmes/filesize.pipe';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { FilmesComponent } from './demos/pipes/filmes/FilmesComponent';
     CadastroComponent,
     ProdutoAppComponet,
     FilmesComponent,
+    FileSizePiope
   ],
   imports: [
     BrowserModule,

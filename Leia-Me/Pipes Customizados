@@ -1,0 +1,62 @@
+1. Criando um Pipe
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({
+    name:'filesize' esse nome sera usando no html
+})
+export class FileSizePiope implements PipeTransform{
+
+    transform(size : number) {
+
+        let tamanhoCalculado = (size /(1024 * 1024))
+        let extension = 'MB'
+
+        if(tamanhoCalculado > 1024){
+            tamanhoCalculado = (tamanhoCalculado / 1024)
+            extension = 'GB'
+        }
+
+        return tamanhoCalculado.toFixed(2) + extension;
+    }
+
+}
+
+2. Registrando o Pipe no Modulo
+import { FileSizePiope } from './demos/pipes/filmes/filesize.pipe';
+@NgModule({
+  declarations: [
+    AppComponent,
+    SobreComponent,
+    CadastroComponent,
+    ProdutoAppComponet,
+    FilmesComponent,
+    FileSizePiope
+  ],
+
+  3 . Unsando o Pipe no componnet.Html
+
+  <div class="container main-container">
+
+    <h1>Filmes</h1>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Nome</th>
+                <th scope="col">Data Lançamento</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Tamanho Arquivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let filme of filmes'>
+                <img [src]="filme.imagem" style="padding-bottom: 5px;">
+                <td>{{ filme.nome | titlecase}}</td>
+                <td>{{ filme.dataLancamento | date:"dd/MM/yyyy"}}</td>
+                <td>{{ filme.valor |  currency:'BRL':'symbol':'1.2-2':'pt'}}</td>
+                <td>{{ filme.tamanho | filesize}}</td> o nome que vem antes do pipe e o paramento para funcao  transform
+            </tr>
+        </tbody>
+    </table>
+</div>
