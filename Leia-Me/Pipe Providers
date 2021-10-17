@@ -1,3 +1,40 @@
+Criar o Pipe
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({
+    name: 'imageformater'
+})
+export class ImageFormaterPipe implements PipeTransform{
+
+    transform(imagem: string,caminho : string ='',substituir:boolean) {
+
+        if(caminho =='default')
+            caminho ='assets'
+
+        if(imagem.length ==  0 && substituir)
+            imagem ='semCapa.jpg'
+
+        return "/" + caminho + "/" + imagem;
+    }
+
+}
+
+2- Importar no modulo app.module
+import { ImageFormaterPipe } from './demos/pipes/filmes/image.pipe';
+@NgModule({
+  declarations: [
+    AppComponent,
+    SobreComponent,
+    CadastroComponent,
+    ProdutoAppComponet,
+    FilmesComponent,
+    FileSizePiope,
+    ImageFormaterPipe
+  ],
+
+
+3 - Usando no filmes.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Filme } from './filme';
 import { ImageFormaterPipe } from './image.pipe';
@@ -63,7 +100,7 @@ export class FilmesComponent implements OnInit {
             dataLancamento: filme.dataLancamento,
             valor: filme.valor,
             tamanho : filme.tamanho,
-            imagem : this.imageFormart.transform(filme.imagem,'default',true)
+            imagem : this.imageFormart.transform(filme.imagem,'default',true) // usando o Pipe no TS
         }
     })
   }
