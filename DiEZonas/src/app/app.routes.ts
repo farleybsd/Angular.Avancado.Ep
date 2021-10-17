@@ -7,12 +7,14 @@ import { NotFoundComponent } from './navegacao/not-found/not-found.component';
 import { AuthGuard } from './Services/app.guard';
 import { CadastroGuard } from './Services/cadastro.guard';
 import { FilmesComponent } from './demos/pipes/filmes/FilmesComponent';
+import { BarComponent } from './demos/arquitetura-componentes/bar-di-zones/bar.component';
 
 const rootRouterConfig: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full'},
     { path: 'home', component: HomeComponent},
     { path: 'sobre', component: SobreComponent },
     { path: 'filmes', component: FilmesComponent },
+    { path: 'bar', component: BarComponent },
     { path: 'cadastro', component: CadastroComponent,canDeactivate:[CadastroGuard] },
     { path: 'produtos', 
             loadChildren: () => import('./demos/arquitetura-componentes/produto.module')

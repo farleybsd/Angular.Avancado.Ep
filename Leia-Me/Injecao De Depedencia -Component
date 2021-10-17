@@ -1,0 +1,199 @@
+1 - Criar o Component :
+- bar.Component.ts
+-bar.Component.html
+
+2 - Ir no Component Menu Adc um novo Link:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-menu',
+  templateUrl: './menu.component.html'
+})
+export class MenuComponent {
+  nav : Nav[] =[
+    {
+      link:'/home',
+      name: 'Home',
+      exact:true,
+      admim:false
+    },
+    {
+      link:'/cadastro',
+      name: 'Cadastro',
+      exact:true,
+      admim:false
+    },
+    {
+      link:'/sobre',
+      name: 'Sobre',
+      exact:true,
+      admim:false
+    },
+    {
+      link:'/produtos',
+      name: 'Produto',
+      exact:false,
+      admim:false
+    },
+    {
+      link: '/filmes',
+      name: 'Filmes',
+      exact: false,
+      admim: false
+    },
+    {
+      link: '/admin',
+      name: 'Admin',
+      exact: false,
+      admim: false
+    },
+    {
+      link: '/bar',
+      name: 'Bar',
+      exact: false,
+      admim: false
+    }
+  ]
+}
+
+interface Nav{
+  link:string,
+  name: string,
+  exact: boolean,
+  admim: boolean
+}
+
+
+3 - Ir no app.routes Adc a rota
+import { BarComponent } from './demos/arquitetura-componentes/bar-di-zones/bar.component';
+
+const rootRouterConfig: Routes = [
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: 'home', component: HomeComponent},
+    { path: 'sobre', component: SobreComponent },
+    { path: 'filmes', component: FilmesComponent },
+    { path: 'bar', component: BarComponent },
+    { path: 'cadastro', component: CadastroComponent,canDeactivate:[CadastroGuard] },
+    { path: 'produtos', 
+            loadChildren: () => import('./demos/arquitetura-componentes/produto.module')
+            .then(m => m.ProdutoModule)},
+    { path: 'admin', 
+            loadChildren: () => import('./admin/admin.module')
+            .then(m => m.AdminModule),
+            canLoad:[AuthGuard],
+            canActivate:[AuthGuard]
+    },
+
+    { path: '**', component: NotFoundComponent}, // Tem que ser a ultima Declaracao
+];
+
+
+4 -- Criar o module de Bar
+import {NgModule} from "@angular/core"
+import {CommonModule} from "@angular/common"
+import { BarComponent } from "./bar.component"
+
+@NgModule({
+    imports:[
+        CommonModule
+    ],
+    declarations:[
+        BarComponent
+    ],
+    exports:[
+        BarComponent
+    ]
+})
+
+export class BarModule{}
+
+5-- REGISTART BarModule np app.module 
+
+import { BarModule } from './demos/arquitetura-componentes/bar-di-zones/bar.module';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SobreComponent,
+    CadastroComponent,
+    ProdutoAppComponet,
+    FilmesComponent,
+    FileSizePiope,
+    ImageFormaterPipe
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NavegacaoModule,
+    TextMask.TextMaskModule,
+    NgBrazil,
+    CustomFormsModule,
+    AppRoutingModule,
+    BarModule
+  ],
+
+
+6 -- Criar o Bar Service
+import { Injectable } from "@angular/core";
+import {HttpClient} from "@angular/common/http"
+
+@Injectable()
+export class BarService{
+
+    constructor() {}
+
+    obterBebidas() : string{
+        return 'Bebidas';
+    }
+
+    obterPorcoes() : string{
+        return 'Porcoes';
+    }
+
+    obterRefeicoes() : string{
+        return 'Refeicoes';
+    }
+}
+
+export class BarServiceMock{
+
+    obterBebidas() : string{
+        return 'Mock';
+    }
+
+    obterPorcoes() : string{
+        return 'Mock';
+    }
+
+    obterRefeicoes() : string{
+        return 'Mock';
+    }
+}
+
+
+7-- registra o BarService no BarComponent
+
+import { Component, OnInit } from '@angular/core';
+import { BarService, BarServiceMock } from './bar.service';
+
+@Component({
+  selector: 'app-bar',
+  templateUrl: './bar.component.html',
+  providers: [
+    //{provide:BarService,useClass:BarServiceMock}
+    {provide:BarService,useClass:BarService}
+  ]
+})
+export class BarComponent  implements OnInit {
+
+  barBebida1 : string;
+
+  constructor(private barService:BarService) { }
+
+  ngOnInit() {
+    this.barBebida1 = this.barService.obterBebidas();
+  }
+
+}
