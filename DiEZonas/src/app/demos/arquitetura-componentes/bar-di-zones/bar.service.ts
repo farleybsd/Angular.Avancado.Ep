@@ -1,11 +1,21 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable, Injector } from "@angular/core";
 import {HttpClient} from "@angular/common/http"
+import { BarUnidadeConfig, BAR_UNIDADE_CONFIG } from "./bar.config";
 
+export function BarFactory(/*http: HttpClient,*/injector:Injector){
+    return new BarService(/*http,*/injector.get(BAR_UNIDADE_CONFIG));
+}
 @Injectable()
 export class BarService{
 
-    constructor() {}
+    constructor(
+        //private http: HttpClient,
+        @Inject(BAR_UNIDADE_CONFIG) private config : BarUnidadeConfig
+        ) {}
 
+    public ObterUnidade() : string{
+        return 'UnidadeId' + this.config.UnidadeId + 'Token' + this.config.unidadeToken
+    }    
     obterBebidas() : string{
         return 'Bebidas';
     }
