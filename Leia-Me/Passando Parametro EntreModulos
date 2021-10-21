@@ -1,0 +1,147 @@
+1 - Criar uma interface com as  propiedades que serao passadas
+
+import { InjectionToken } from "@angular/core";
+
+export interface BarUnidadeConfig{
+    UnidadeId:number,
+    unidadeToken:string
+}
+
+export const BAR_UNIDADE_CONFIG = new InjectionToken<BarUnidadeConfig>('BAR_UNIDADE_CONFIG')
+
+2 - Ir no modulo que ira recebe as variaveis
+
+import {NgModule} from "@angular/core"
+import {CommonModule} from "@angular/common"
+import { BarComponent } from "./bar.component"
+import { ModuleWithProviders } from "@angular/compiler/src/core"
+import { BarUnidadeConfig, BAR_UNIDADE_CONFIG } from "./bar.config"
+
+@NgModule({
+    imports:[
+        CommonModule
+    ],
+    declarations:[
+        BarComponent
+    ],
+    exports:[
+        BarComponent
+    ]
+})
+
+export class BarModule{
+    static foorRoot(config :BarUnidadeConfig) :ModuleWithProviders{
+        return {
+            ngModule : BarModule,
+            providers:[
+                {provide:'ConfigManualUnidade' ,useValue:config},
+                {provide:BAR_UNIDADE_CONFIG ,useValue:config}
+            ]
+        }
+    }
+
+    static forChild(){
+
+    }
+}
+
+3 - Ir no component do Mudulo que ira recebe as variaveis de outro   modulo
+
+import { Component, Inject, OnInit } from '@angular/core';
+import { BarUnidadeConfig, BAR_UNIDADE_CONFIG } from './bar.config';
+import { BarService, BarServiceMock } from './bar.service';
+
+@Component({
+  selector: 'app-bar',
+  templateUrl: './bar.component.html',
+  providers: [
+    //{provide:BarService,useClass:BarServiceMock}
+    {provide:BarService,useClass:BarService}
+  ]
+})
+export class BarComponent  implements OnInit {
+
+  ConfigManual: BarUnidadeConfig;
+  Config: BarUnidadeConfig;
+  barBebida1 : string;
+
+  constructor(
+    private barService:BarService,
+    @Inject('ConfigManualUnidade') private ApiConfigManual: BarUnidadeConfig,
+    @Inject(BAR_UNIDADE_CONFIG) private ApiConfig: BarUnidadeConfig
+    ) { }
+
+  ngOnInit() {
+    this.barBebida1 = this.barService.obterBebidas();
+    this.ConfigManual = this.ApiConfigManual;
+    this.Config = this.ApiConfig;
+  }
+
+}
+
+No Html Do mesmo Component Acima
+<div class="container main-container">
+    <h2>Bar</h2>
+    <div>
+        Bebida 1: {{barBebida1}}
+    </div>
+    <div>
+        Unidade Manual: {{ConfigManual.UnidadeId}} - Token Manual: {{ConfigManual.unidadeToken}}
+    </div>
+    <div>
+        Unidade: {{Config.UnidadeId}} - Token: {{Config.unidadeToken}}
+    </div>
+</div>
+
+5 - Passo ir no modulo que tem os dados para passar  como parametro
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, Provider } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+
+import { NgBrazil } from 'ng-brazil'
+import { TextMask } from 'ng-brazil';
+import { CustomFormsModule } from 'ng2-validation'
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt);
+
+import { AppComponent } from './app.component';
+import { SobreComponent } from './institucional/sobre/sobre.component';
+import { CadastroComponent } from './demos/reactiveForms/cadastro/cadastro.component';
+import { NavegacaoModule } from './navegacao/navegacao.module';
+
+import { AppRoutingModule } from './app.routes';
+import { ProdutoAppComponet } from './demos/arquitetura-componentes/produto.app.component';
+import { AuthGuard } from './Services/app.guard';
+import { CadastroGuard } from './Services/cadastro.guard';
+import { FilmesComponent } from './demos/pipes/filmes/FilmesComponent';
+import { FileSizePiope } from './demos/pipes/filmes/filesize.pipe';
+import { ImageFormaterPipe } from './demos/pipes/filmes/image.pipe';
+import { BarModule } from './demos/arquitetura-componentes/bar-di-zones/bar.module';
+import { BarService } from './demos/arquitetura-componentes/bar-di-zones/bar.service';
+
+export const BAR_PROVIDERS : Provider[] = [
+  BarService
+];
+
+@NgModule({
+  declarations: [
+   
+  ],
+  imports: [
+    BarModule.foorRoot({
+      UnidadeId: 1000,
+      unidadeToken: 'eca938c99a0e9ff91029dc'
+    })
+  ],
+  providers: [
+   // {provide: APP_BASE_HREF, useValue: '/'} adc no index.htmL
+   AuthGuard,
+   CadastroGuard,
+   //BAR_PROVIDERS
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
