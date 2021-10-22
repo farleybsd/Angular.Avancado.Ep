@@ -17,7 +17,7 @@ export class BarService{
         return 'UnidadeId' + this.config.UnidadeId + 'Token' + this.config.unidadeToken
     }    
     obterBebidas() : string{
-        return 'Bebidas';
+        return 'Bebidasss';
     }
 
     obterPorcoes() : string{
@@ -42,4 +42,10 @@ export class BarServiceMock{
     obterRefeicoes() : string{
         return 'Mock';
     }
+}
+
+export abstract class BebidasService {
+   
+   obterBebidas :() => string     
+    
 }
