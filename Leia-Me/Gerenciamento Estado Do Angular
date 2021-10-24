@@ -1,0 +1,8 @@
+Libs ultilizados para gerenciamento de estado no abgula:
+
+- RxJs
+- NgRx Redux para angular
+- Redux
+- Akita
+
+Irremos ultilizar RxJs
