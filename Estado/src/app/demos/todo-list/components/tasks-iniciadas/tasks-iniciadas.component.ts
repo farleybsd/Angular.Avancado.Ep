@@ -11,9 +11,9 @@ export class TasksIniciadasComponent implements OnInit {
 
   iniciados$: Observable<any[]>;
 
-  constructor() {}
+  constructor(private tasService :TasksService) {}
 
   ngOnInit() {
-   
+   this.iniciados$ = this.tasService.getTodoList$
   }
 }
