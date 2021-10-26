@@ -8,6 +8,7 @@ import { AuthGuard } from './Services/app.guard';
 import { CadastroGuard } from './Services/cadastro.guard';
 import { FilmesComponent } from './demos/pipes/filmes/FilmesComponent';
 import { BarComponent } from './demos/arquitetura-componentes/bar-di-zones/bar.component';
+import { TodoComponent } from './demos/todo-list/todo.component';
 
 const rootRouterConfig: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -25,6 +26,7 @@ const rootRouterConfig: Routes = [
             canLoad:[AuthGuard],
             canActivate:[AuthGuard]
     },
+    { path: 'todo', component: TodoComponent },
 
     { path: '**', component: NotFoundComponent}, // Tem que ser a ultima Declaracao
 ];
