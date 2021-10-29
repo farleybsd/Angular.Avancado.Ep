@@ -25,4 +25,7 @@ export class TasksIniciadasComponent implements OnInit {
      map(todolist => todolist.filter(task => task.iniciado && !task.finalizado))
    );
   }
+  onToglle(event){
+    this.tasService.toggle(event);// Funcao que Atualiza a Store
+  }
 }

@@ -6,3 +6,136 @@ Libs ultilizados para gerenciamento de estado no abgula:
 - Akita
 
 Irremos ultilizar RxJs
+
+npm install -g json-server
+Rodar o Json Server 
+json-server --watch todo.db.json
+
+
+1 - Criando Uma Store a ideia desssa classe e ser chamada pelo servico e ela vai conter os valores
+e depois os comentes ira chamar a store nao mais o service.
+
+import { BehaviorSubject, Observable } from "rxjs";
+import { Task } from "../../task";
+import {map} from "rxjs/operators"
+
+export interface State {
+    todoList : Task[]
+}
+
+const state: State ={
+    todoList:[]
+}
+
+export class Store{
+    private subject = new BehaviorSubject<State>(state);//Propagador Do Estado Atual
+    private store = this.subject.asObservable();
+
+    get value(){
+        return this.subject.value;
+    }
+
+    set(name:string,state:any){
+        this.subject.next({
+            ...this.value,[name] : state
+        }) // next propaga o valor
+    }
+
+    public getTodoList() : Observable<Task[]>{
+        return this.store
+        .pipe(map(store => store.todoList))
+    }
+}
+
+2 - Imporat a store no modulo
+
+import { map } from 'rxjs/operators';
+@NgModule({
+  imports: [
+    CommonModule,
+    HttpClientModule
+  ],
+  providers: [
+    TasksService,
+    Store
+  ],
+  declarations: [
+    TodoComponent,
+    TasksFinalizadasComponent,
+    TasksIniciadasComponent,
+    ToDoListComponent,
+    TasksComponent
+  ],
+  exports: [
+    TodoComponent,
+    TasksFinalizadasComponent,
+    TasksIniciadasComponent,
+    TasksComponent,
+    ToDoListComponent
+  ]
+})
+export class TodoModule {}
+
+3 - Passo injetar a store no service
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Task } from './task';
+import { Store } from './components/todo-list/todo.store';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class TasksService {
+
+  constructor(
+    private http:HttpClient,
+    private store : Store
+    ) { }
+
+  getTodoList$ : Observable<Task[]> = this.http
+  .get<Task[]>('http://localhost:3000/todolist')
+  .pipe(tap(next => this.store.set('todoList',next)))
+
+  getTodoList2() : Observable<Task[]>{
+    return this.http
+    .get<Task[]>('http://localhost:3000/todolist')
+  }
+ 
+}
+
+//HttpClient tem que estar importado no app.module junto com commoModule
+
+4 - Injetar a store no componennt
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { TasksService } from '../../todo.service';
+import { Store } from '../todo-list/todo.store';
+
+@Component({
+  selector: 'tasks',
+  templateUrl: './tasks.component.html'
+})
+export class TasksComponent implements OnInit,OnDestroy {
+
+  todolist$: Observable<any[]>
+  subscription: Subscription;
+  constructor(
+    private taskService:TasksService,
+    private store : Store
+    ) {}
+
+  ngOnInit() {  
+   //this.todolist$ = this.taskService.getTodoList$;
+   this.todolist$ = this.store.getTodoList()
+      .pipe(
+        map(todolist => todolist.filter(task => !task.iniciado && !task.finalizado)))
+
+        this.subscription = this.taskService.getTodoList$.subscribe(); // ativa fluxo de dados
+  }  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+}

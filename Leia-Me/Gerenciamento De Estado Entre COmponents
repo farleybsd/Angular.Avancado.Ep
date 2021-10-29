@@ -1,0 +1,159 @@
+-- Ir no html e criar uma funcao que vai pegar os dados que sera
+monitorado pela store
+<div class="task-list">
+    <h3>
+        <ng-content></ng-content>
+    </h3>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr *ngFor="let item of list;index as i">
+                <td>
+                    <span>{{ item.nome }}</span>
+                    <span *ngIf="!item.finalizado && item.iniciado"  class="task-list__finalizado"(click)="toggleItem(i,'finalizar')"></span>
+                    <span *ngIf="!item.finalizado && !item.iniciado" class="task-list__iniciado"(click)="toggleItem(i,'iniciar')"></span>
+                    <span *ngIf="item.finalizado &&  !item.iniciado"  class="task-list__retroceder"(click)="toggleItem(i,'retomar')"></span>
+                    <span *ngIf="!item.finalizado &&  item.iniciado" class="task-list__retroceder"(click)="toggleItem(i,'cancelar')"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+--Nessa funcao que foi criada iremos criar um emissor de dados  o service
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Task } from "../../task";
+
+@Component({
+  selector: 'todo-list',
+  templateUrl: './todo-list.component.html',
+  styleUrls: ['todo-list.component.css']  
+})
+export class ToDoListComponent {
+
+  @Input()
+  list: Task[]; // Emtrada de Dados
+  
+  @Output()// Saida De Eventos
+  toggle = new EventEmitter<any>(); // emitir o evento para metodo responsavel que sera criada no service como funcao
+
+  toggleItem(index:number,acao:string) {
+
+    const task = this.list[index];
+
+    switch (acao) {
+      case 'iniciar':
+        task.finalizado = false;
+        task.iniciado = true;
+        break; 
+      case 'finalizar':
+        task.finalizado = true;
+        task.iniciado = false;
+        break; 
+      case 'retomar':
+        task.finalizado = false;
+        task.iniciado = true;
+        break; 
+      case 'cancelar':
+        task.finalizado = false;
+        task.iniciado = false;
+        break;      
+    }
+
+    this.toggle.emit({
+      task:{...task}
+    });//emitir um valor que sera passado para o service
+  }
+}
+
+-- No service vamos nos inscrever no emissor de evento e atualizar a store
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Task } from './task';
+import { Store } from './components/todo-list/todo.store';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class TasksService {
+
+  constructor(
+    private http:HttpClient,
+    private store : Store
+    ) { }
+
+  getTodoList$ : Observable<Task[]> = this.http
+  .get<Task[]>('http://localhost:3000/todolist')
+  .pipe(tap(next => this.store.set('todoList',next)))
+
+  getTodoList2() : Observable<Task[]>{
+    return this.http
+    .get<Task[]>('http://localhost:3000/todolist')
+  }
+ 
+  toggle(event:any){
+    this.http
+        .put(`http://localhost:3000/todolist/${event.task.id}`,event.task)
+        .subscribe(()=>{
+          //verficando qual task foi alterada para persistir para store
+          const  value = this.store.value.todoList;
+
+          const todoList = value.map((task :Task)=>{
+            if(event.task.id === task.id){
+              return{...task,...event.task} // propagando alteracoes
+            }
+            else{
+              return task;
+            }
+          });
+          this.store.set('todolist',todoList); // atualizando o estado na store
+        })
+  }
+}
+
+//HttpClient tem que estar importado no app.module junto com commoModule
+
+
+-- NOS Component fILHOS 
+CRIAR A FUNCAO PARA PEGAR OS Dados
+<div class="tasks">
+    <todo-list [list]="finalizados$ | async" (toggle)="onToglle($event)">
+        Finalizadas
+    </todo-list>
+</div>
+
+-- No component ts chamar a funcao que atualiza a store
+import { Component, OnInit } from '@angular/core';
+
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { TasksService } from '../../todo.service';
+import { Store } from '../todo-list/todo.store';
+
+@Component({
+  selector: 'tasks-finalizadas',
+  templateUrl: './tasks-finalizadas.component.html'
+})
+export class TasksFinalizadasComponent implements OnInit {
+
+  finalizados$: Observable<any[]>;
+
+  constructor(
+    private taskService :TasksService,
+    private store : Store
+    ) { }
+
+  ngOnInit() {
+       //this.finalizados$ = this.taskService.getTodoList$
+       this.finalizados$ = this.store.getTodoList()
+       .pipe(
+         map(todolist => todolist.filter(task => task.finalizado))
+       )
+  }
+  onToglle(event){
+    this.taskService.toggle(event);
+  }
+}
