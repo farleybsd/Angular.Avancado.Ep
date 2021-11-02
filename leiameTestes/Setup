@@ -1,0 +1,7 @@
+Criando o projeto com Tests
+ng new unit-tests
+
+rodando um teste
+ng test
+Verificando a cobertura de codigo
+ng test --code-coverage
