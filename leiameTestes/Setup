@@ -5,3 +5,6 @@ rodando um teste
 ng test
 Verificando a cobertura de codigo
 ng test --code-coverage
+
+Se nao reconher os teste
+npm i --save-dev @types/jest
