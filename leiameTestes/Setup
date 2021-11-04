@@ -8,3 +8,9 @@ ng test --code-coverage
 
 Se nao reconher os teste
 npm i --save-dev @types/jest
+
+
+Angular teste ponta a ponta e2e ele usa o protractor
+
+Rodando o teste ponta a ponta
+ng e2e
