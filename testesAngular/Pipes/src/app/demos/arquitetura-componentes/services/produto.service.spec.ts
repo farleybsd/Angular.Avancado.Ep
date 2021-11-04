@@ -34,36 +34,39 @@ const produtoFake: Produto =
     imagem: 'gopro.jpg'
 };
 
-describe('ProdutoService', () => {
+describe('ProdutoService',()=>{
 
-    let service: ProdutoService;
+    let service : ProdutoService;
 
-    beforeEach(() => {
+    //setup
+    beforeEach(()=>{
         const bed = TestBed.configureTestingModule({
-            providers: [
+            providers:[
                 ProdutoService
             ]
         });
-
         service = bed.get(ProdutoService);
     });
 
-    it('Deve retornar uma lista de produtos', () => {
-        spyOn(service, 'obterTodos').and.returnValue(produtosFake);
+    it('Deve Retornar Uma Lista De Produto',() => {
+        
+        spyOn(service,'obterTodos').and.returnValue(produtosFake); // moca o retorno
 
-        let result = service.obterTodos('ativos');
+        let result = service.obterTodos('ativos')
 
         expect(result.length).toBe(3);
-
         expect(result).toEqual(produtosFake);
     });
 
-    it('Deve retornar um produto', () => {
-        spyOn(service, 'obterPorId').and.returnValue(produtoFake);
+    it('Deve retornar um produto',() => {
+
+        spyOn(service,'obterPorId').and.returnValue(produtoFake)
 
         let result = service.obterPorId(2)
 
         expect(result).toEqual(produtoFake);
-        expect(result.id).toEqual(2);
-    });
+        expect(result.id).toBe(2);
+    })
+
+
 });
