@@ -1,0 +1,13 @@
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\bin\Debug\netcoreapp3.1\DevIO.Data.deps.json
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\bin\Debug\netcoreapp3.1\DevIO.Data.dll
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\bin\Debug\netcoreapp3.1\DevIO.Data.pdb
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\bin\Debug\netcoreapp3.1\DevIO.Business.dll
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\bin\Debug\netcoreapp3.1\DevIO.Business.pdb
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.csprojAssemblyReference.cache
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.AssemblyInfoInputs.cache
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.AssemblyInfo.cs
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.csproj.CoreCompileInputs.cache
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.csproj.CopyComplete
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.dll
+C:\MyGit\Angular.Avancado.Ep\Back-End\src\DevIO.Data\obj\Debug\netcoreapp3.1\DevIO.Data.pdb

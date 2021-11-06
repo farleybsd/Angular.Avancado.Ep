@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "WtDKOU6Uynt3J0O1Lr4Tww8z5X8ISOg8ONJqKFKE53skMwaHdnHlncQjydxLdlEqxibyZjyeSIQAx1EsaZipEw==",
+  "success": true,
+  "projectFilePath": "C:\\MyGit\\Angular.Avancado.Ep\\Back-End\\src\\DevIO.Business\\DevIO.Business.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\farley.rufino\\.nuget\\packages\\fluentvalidation\\8.6.2\\fluentvalidation.8.6.2.nupkg.sha512",
+    "C:\\Users\\farley.rufino\\.nuget\\packages\\system.componentmodel.annotations\\4.4.1\\system.componentmodel.annotations.4.4.1.nupkg.sha512"
+  ],
+  "logs": []
+}
