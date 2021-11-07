@@ -38,3 +38,14 @@ src/app/app.component.html
 
 - Alterar o styles.css
 src/style.css
+
+ # Bootstrap
+https://ng-bootstrap.github.io/#/home
+ng add @ng-bootstrap/ng-bootstrap
+
+registrar no app.modules.ts e no navegacao.module.ts
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+imports: [
+    
+    NgbModule
+  ],
