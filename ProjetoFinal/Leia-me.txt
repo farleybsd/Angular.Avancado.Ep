@@ -1,0 +1,40 @@
+Criando um Projeto 
+ng new front-end
+cd front-end
+ng s
+
+# Criando a Navegacao Criar as pasta
+
+app/navegacao
+app/navegacao/footer
+app/navegacao/home
+app/navegacao/menu
+app/navegacao/not-found
+
+- Criar o modulo de navegacao
+app/navegacao/navegacao.module.ts
+
+- Registrar o navegacao.module.ts
+registrar no app.modules.ts
+
+Criando a Component para cada pasta
+app/navegacao/footer.component.ts
+app/navegacao/home.component.ts
+app/navegacao/menu.component.ts
+app/navegacao/not-found.component.ts
+
+- Registrar os component no modulo de navegacao
+app/navegacao/navegacao.module.ts
+
+
+- Aterar o Index Html para registrar bootstrap outras ferramentas
+src/index.html
+
+- Adicionando as rotas de navegacao
+src/app/app-routing.modules.ts
+
+- Registrar os componentes de navegacao no app.component.html
+src/app/app.component.html
+
+- Alterar o styles.css
+src/style.css
