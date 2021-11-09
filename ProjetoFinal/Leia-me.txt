@@ -49,3 +49,22 @@ imports: [
     
     NgbModule
   ],
+
+- Criando Modulo Conta
+ng g module conta
+-Criando Component Cadastro
+ng g c conta/cadastro
+-Criando Component Login
+ng g c conta/login
+-Criar as rotas do modulo
+conta.route.ts
+-Criando component principal(Fazer as rotas do modulo)
+conta.app.component.ts
+- Registrar o ContaRoutingModule
+no modulo conta.module.ts
+
+-- Adicionando o Module Contas na rotas de navegacao
+src/app/app-routing.modules.ts
+
+-- Criando os Links no MenuComponent
+src/app/navegacao/menu
