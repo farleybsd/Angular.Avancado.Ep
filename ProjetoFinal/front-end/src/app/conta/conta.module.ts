@@ -9,7 +9,11 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http"
 
+import { ContaService } from './services/conta.service';
+
 import { ContaRoutingModule } from './conta.route';
+import { CustomFormsModule } from 'ngx-custom-validators';
+
 
 
 @NgModule({
@@ -24,7 +28,11 @@ import { ContaRoutingModule } from './conta.route';
     ContaRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CustomFormsModule
+  ],
+  providers:[
+    ContaService
   ]
 })
 export class ContaModule { }

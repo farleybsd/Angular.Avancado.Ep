@@ -68,3 +68,18 @@ src/app/app-routing.modules.ts
 
 -- Criando os Links no MenuComponent
 src/app/navegacao/menu
+
+-- Criar Models Usuario
+src/app/conta/models/usuario.ts
+--Criar Service
+src/app/conta/service/conta.service.ts
+--Registrar o conta.service.ts no modulo de conta
+src/app/conta/conta.module.ts
+--Criar a pasta Utils
+src/app/utils/generic-form-validations
+--Implementando Cadastro.Component.ts
+src/app/conta/cadastro/Cadastro.Component.ts
+-- Instalando ngx-custom-validators
+npm i ngx-custom-validators@8.0.0
+-- Registrando ngx-custom-validators no conta.module
+src/app/conta/conta.module
