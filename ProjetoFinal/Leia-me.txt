@@ -83,3 +83,7 @@ src/app/conta/cadastro/Cadastro.Component.ts
 npm i ngx-custom-validators@8.0.0
 -- Registrando ngx-custom-validators no conta.module
 src/app/conta/conta.module
+-- Implementando o ContaService
+--Criar a pasta de Servicos Genericos
+src/app/services/base.services.ts
+src/app/conta/service/conta.service.ts
