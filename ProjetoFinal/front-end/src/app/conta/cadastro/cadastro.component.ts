@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CustomValidators } from 'ngx-custom-validators';
 import { fromEvent, merge, Observable } from 'rxjs';
 
@@ -25,8 +26,11 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   genericValidator!: GenericValidator;
   displayMessage: DisplayMessage = {};
 
-  constructor(private fb: FormBuilder,
-    private contaService: ContaService) {
+  constructor(
+    private fb: FormBuilder,
+    private contaService: ContaService,
+    private router : Router
+    ) {
       this.validationMessages = {
         email: {
           required: 'Informe o e-mail',
@@ -79,11 +83,14 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   }
 
   processarSucesso(response : any) : void {
-
+    this.cadastroForm.reset();
+    this.errors =[];
+    this.contaService.localStorage.salvarDadosLocaisUsuario(response);
+    this.router.navigate(['/home'])
   }
 
   processarFalha(fail:any){
-
+    this.errors = fail.error.errors;
   }
 
 }
