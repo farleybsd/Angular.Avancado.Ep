@@ -92,3 +92,16 @@ src/app/conta/service/conta.service.ts
 src/enviroment
 environment.ts  ng s pegar localhost
 enviroment.prod.ts ng s --prod prducao
+
+-- Adiconando Component Informacoes de usuario logado
+front-end/src/app/navegacao/menu-login/menu-login.component.html
+front-end/src/app/navegacao/menu-login/menu-login.component.ts
+-- Registrando o component informacoes de usuario no modulo
+front-end/src/app/navegacao/navegacao.module.ts
+
+--Registrando o component informacoes do Usuario no menu
+ front-end/src/app/navegacao/menu/menu.component.html
+-- Aterado o icone do fontansome
+front-end/src/index.html
+
+
