@@ -87,3 +87,8 @@ src/app/conta/conta.module
 --Criar a pasta de Servicos Genericos
 src/app/services/base.services.ts
 src/app/conta/service/conta.service.ts
+
+-- Trabalhando com variaveis de Ambiente
+src/enviroment
+environment.ts  ng s pegar localhost
+enviroment.prod.ts ng s --prod prducao
