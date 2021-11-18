@@ -104,4 +104,16 @@ front-end/src/app/navegacao/navegacao.module.ts
 -- Aterado o icone do fontansome
 front-end/src/index.html
 
+--ngx-toastr
+https://www.npmjs.com/package/ngx-toastr
+npm install ngx-toastr --save
+npm install @angular/animations --save
+
+--If you are using angular-cli you can add it to your angular.json
+"styles": [
+  "styles.scss",
+  "node_modules/ngx-toastr/toastr.css" // try adding '../' if you're using angular cli before 6
+]
+
+configurar app.modules.ts
 
