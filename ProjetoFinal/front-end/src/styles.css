@@ -7,7 +7,14 @@ a.navbar-brand {
 
 /* Sticky footer styles
   -------------------------------------------------- */
-
+.main-container{
+    padding-top: 25px;
+    padding-right:15px ;
+    padding-left: 100px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+}
 html {
     font-size: 14px;
 }
