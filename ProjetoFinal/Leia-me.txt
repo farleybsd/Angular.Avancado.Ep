@@ -117,3 +117,8 @@ npm install @angular/animations --save
 
 configurar app.modules.ts
 
+--Guarda de Rotas
+criar conta.guard.ts src/app/conta/service
+Criar uma variavel de controle dentro do component  src/app/conta/cadastro
+Reristrar o servico no module  src/app/conta/conta.module
+Adc o servico ao gerencidor de roras src/app/conta/conta.route/ts
