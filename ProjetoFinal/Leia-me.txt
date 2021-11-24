@@ -122,3 +122,30 @@ criar conta.guard.ts src/app/conta/service
 Criar uma variavel de controle dentro do component  src/app/conta/cadastro
 Reristrar o servico no module  src/app/conta/conta.module
 Adc o servico ao gerencidor de roras src/app/conta/conta.route/ts
+
+-- Trabalhando com validacao
+ng-Brazil
+https://www.npmjs.com/package/ng-brazil
+npm i ng-brazil
+adc as nascaras
+npm i -S angular2-text-mask text-mask-addons
+
+Import module in root(Fornecedores Module)
+
+import { NgBrazil } from 'ng-brazil' 
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    ....,
+    NgBrazil
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+js brasil
+npm i js-brasil
