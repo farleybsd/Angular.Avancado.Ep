@@ -17,10 +17,13 @@ export class ExcluirComponent {
     private fornecedorService: FornecedorService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService) 
+    {
 
-    this.fornecedorService.obterPorId(route.params['id'])
-      .subscribe(fornecedor => this.fornecedor = fornecedor);
+
+    // this.fornecedorService.obterPorId(route.params['id'])
+    //   .subscribe(fornecedor => this.fornecedor = fornecedor);
+    this.fornecedor = this.route.snapshot.data['fornecedor']; // Vem do Resolve da rota
   }
 
   excluirEvento() {

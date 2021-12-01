@@ -72,8 +72,10 @@ export class EditarComponent implements OnInit {
 
     this.genericValidator = new GenericValidator(this.validationMessages);
 
-    this.fornecedorService.obterPorId(route.params['id'])
-      .subscribe(fornecedor => this.fornecedor = fornecedor);
+    // this.fornecedorService.obterPorId(route.params['id'])
+    //   .subscribe(fornecedor => this.fornecedor = fornecedor);
+    this.fornecedor = this.route.snapshot.data['fornecedor']; // Vem do Resolve da rota
+    this.tipoFornecedor = this.fornecedor.tipoFornecedor;
   }
 
   ngOnInit() {

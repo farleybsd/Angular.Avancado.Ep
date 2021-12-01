@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TextMaskModule } from 'angular2-text-mask';
 import { NgBrazil } from 'ng-brazil'; 
+import { FornecedorResolve } from './services/fornecedor.resolve';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,11 @@ import { NgBrazil } from 'ng-brazil';
     TextMaskModule,
     NgBrazil,
     
+    
   ],
   providers: [
-    FornecedorService
+    FornecedorService,
+    FornecedorResolve
   ]
 })
 export class FornecedorModule { }
