@@ -41,11 +41,19 @@ export class FornecedorService extends BaseService {
     }
 
     atualizarFornecedor(fornecedor: Fornecedor): Observable<Fornecedor> {
-        return new Observable<Fornecedor>();
+        return this.http
+        .put(this.UrlServiceV1 + "fornecedores/" + fornecedor.id, fornecedor, this.ObterAuthHeaderJson())
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError));
     }
 
     excluirFornecedor(id: string): Observable<Fornecedor> {
-        return new Observable<Fornecedor>();
+        return this.http
+        .delete(this.UrlServiceV1 + "fornecedores/" + id, this.ObterAuthHeaderJson())
+        .pipe(
+            map(super.extractData),
+            catchError(super.serviceError));
     }
 
     consultaCep(cep: string): Observable<CepConsulta> {
