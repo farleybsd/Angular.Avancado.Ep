@@ -149,3 +149,15 @@ export class AppModule { }
 
 js brasil
 npm i js-brasil
+
+spinner
+https://www.npmjs.com/package/ngx-spinner
+
+
+Obs estudar pra frente
+guard route acesso a uma rota
+resolve pegar dados de uma rota
+injection depedencia
+
+Cortando Imagem
+ngx-image-cropper
